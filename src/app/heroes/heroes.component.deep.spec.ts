@@ -62,4 +62,20 @@ describe('HeroesComponent (Deep Tests)', ()=>{
         }
     });
 
+    //DOM Interaction testing
+    it('Should call heroService.deleteHero when the hero components delete button is clicked', () => {
+        //Mock Delete method
+        spyOn(fixture.componentInstance, 'delete');
+
+        mockHeroService.getHeroes.and.returnValue(of(HEROES));
+        //Run ngOnInit
+        fixture.detectChanges();
+
+        const heroComponents = fixture.debugElement.queryAll(By.directive(HeroComponent));
+
+        heroComponents[0].triggerEventHandler('delete', null);
+
+        expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
+    });
+
 });
